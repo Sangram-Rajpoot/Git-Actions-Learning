@@ -2,32 +2,28 @@ name: CI Pipeline
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout code
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      # 2. Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
+          cache: 'npm'
 
-      # 3. Install dependencies
       - name: Install Dependencies
-        run: npm install
+        run: npm ci
 
-      # 4. Build project
       - name: Build Project
         run: npm run build
 
-      # 5. Upload build artifacts
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -39,21 +35,27 @@ jobs:
     needs: build
 
     steps:
-      # 1. Checkout code
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      # 2. Login to DockerHub (optional)
+      - name: Download Build Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-files
+          path: build/
+
       - name: Login to DockerHub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # 3. Build Docker image
       - name: Build Docker Image
-        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/git-actions-learning .
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/git-actions-learning:latest \
+                       -t ${{ secrets.DOCKER_USERNAME }}/git-actions-learning:${{ github.sha }} .
 
-      # 4. Push Docker image (optional)
       - name: Push Docker Image
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/git-actions-learning
+        run: |
+          docker push ${{ secrets.DOCKER_USERNAME }}/git-actions-learning:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/git-actions-learning:${{ github.sha }}
