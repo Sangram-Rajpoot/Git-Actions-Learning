@@ -2,7 +2,7 @@ name: CI Pipeline
 
 on:
   push:
-    branches: ["main"]
+    branches: [ "main" ]
 
 jobs:
   build-and-push:
@@ -18,7 +18,7 @@ jobs:
           node-version: 18
           cache: 'npm'
 
-      - name: Install and Build
+      - name: Install and Build Project
         run: |
           npm ci
           npm run build
@@ -31,6 +31,5 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/Git-Actions-Learning:latest -t ${{ secrets.DOCKER_USERNAME }}/git-actions-learning:${{ github.sha }} .
-          docker push ${{ secrets.DOCKER_USERNAME }}/Git-Actions-Learning:latest
-          docker push ${{ secrets.DOCKER_USERNAME }}/Git-Actions-Learning:${{ github.sha }}
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/app-name:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/app-name:latest
