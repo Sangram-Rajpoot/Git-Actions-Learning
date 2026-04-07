@@ -1,4 +1,3 @@
-
 ![Tic Tac Toe](https://github.com/catherineisonline/tic-tac-toe/blob/main/src/assets/images/project-preview.png?raw=true)
 # Tic Tac Toe
 
