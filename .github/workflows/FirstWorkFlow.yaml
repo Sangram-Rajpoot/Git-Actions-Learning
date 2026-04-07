@@ -31,5 +31,5 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/Git-Actions-Learning .
-          docker push ${{ secrets.DOCKER_USERNAME }}/Git-Actions-Learning
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/git-actions-learning .
+          docker push ${{ secrets.DOCKER_USERNAME }}/git-actions-learning
