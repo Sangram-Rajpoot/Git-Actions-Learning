@@ -31,6 +31,6 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/git-actions-learning:latest -t ${{ secrets.DOCKER_USERNAME }}/git-actions-learning:${{ github.sha }} .
-          docker push ${{ secrets.DOCKER_USERNAME }}/git-actions-learning:latest
-          docker push ${{ secrets.DOCKER_USERNAME }}/git-actions-learning:${{ github.sha }}
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/Git-Actions-Learning:latest -t ${{ secrets.DOCKER_USERNAME }}/git-actions-learning:${{ github.sha }} .
+          docker push ${{ secrets.DOCKER_USERNAME }}/Git-Actions-Learning:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/Git-Actions-Learning:${{ github.sha }}
